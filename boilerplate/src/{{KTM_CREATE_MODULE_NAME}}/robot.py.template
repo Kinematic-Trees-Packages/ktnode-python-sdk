@@ -1,0 +1,14 @@
+from .kt_node import KtNodeRuntime
+
+
+class Robot:
+    # Project-facing SDK interface. Add your robot behavior here.
+
+    def __init__(self, *, native_required: bool = True) -> None:
+        self.runtime = KtNodeRuntime(native_required=native_required)
+
+    def status(self) -> str:
+        if self.runtime.available:
+            major, minor = self.runtime.abi_version()
+            return f"kt-node ABI {major}.{minor} loaded"
+        return "kt-node runtime not loaded; structural smoke only"

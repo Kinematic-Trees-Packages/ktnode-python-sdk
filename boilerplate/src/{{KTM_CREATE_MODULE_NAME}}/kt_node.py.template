@@ -1,0 +1,49 @@
+import ctypes
+import os
+import ctypes.util
+from pathlib import Path
+
+
+class KtNodeRuntime:
+    # Small loader for the KTM-installed libkt_node runtime.
+
+    def __init__(self, native_required: bool = True) -> None:
+        self.native_required = native_required
+        self.library_path = self._find_library()
+        self._library = None
+        if self.library_path:
+            self._library = ctypes.CDLL(str(self.library_path))
+            self._library.kt_abi_version_major.restype = ctypes.c_uint32
+            self._library.kt_abi_version_minor.restype = ctypes.c_uint32
+        elif native_required:
+            raise RuntimeError(
+                "libkt_node was not found. Run this project through KTM so LD_LIBRARY_PATH points at the installed kt-node dependency."
+            )
+
+    def _find_library(self) -> Path | str | None:
+        for variable in ("LD_LIBRARY_PATH", "LIBRARY_PATH"):
+            for raw_dir in os.environ.get(variable, "").split(os.pathsep):
+                if not raw_dir:
+                    continue
+                for name in ("libkt_node.so", "libkt_node.so.1"):
+                    candidate = Path(raw_dir) / name
+                    if candidate.exists():
+                        return candidate
+        for raw_root in os.environ.get("KT_NODE_PACKAGE_ROOTS", "").split(os.pathsep):
+            if not raw_root:
+                continue
+            root = Path(raw_root)
+            for candidate in [root / "lib" / "libkt_node.so", *root.glob("dist/libkt_node/*/*/lib/libkt_node.so")]:
+                if candidate.exists():
+                    return candidate
+        found = ctypes.util.find_library("kt_node")
+        return found
+
+    @property
+    def available(self) -> bool:
+        return self._library is not None
+
+    def abi_version(self) -> tuple[int, int]:
+        if self._library is None:
+            raise RuntimeError("libkt_node is not loaded")
+        return int(self._library.kt_abi_version_major()), int(self._library.kt_abi_version_minor())

@@ -1,0 +1,10 @@
+from {{KTM_CREATE_MODULE_NAME}} import Robot
+
+
+def main() -> None:
+    robot = Robot(native_required=True)
+    print(robot.status())
+
+
+if __name__ == "__main__":
+    main()
