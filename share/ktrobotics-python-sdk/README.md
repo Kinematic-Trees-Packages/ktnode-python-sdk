@@ -1,6 +1,6 @@
 # ktrobotics Python SDK
 
-High-level Python wrapper over `lib_ktrobotics.so.1`.
+High-level Python wrapper over `libkt_node`.
 
 Planned public API:
 

@@ -1,4 +1,4 @@
-"""Low-level ctypes binding for lib_ktrobotics.so.1.
+"""Low-level ctypes binding for the kt-node native library, libkt_node.
 
 This module is intentionally private-ish: node authors should use
 `ktrobotics.runtime`, not call these functions directly.
@@ -154,19 +154,26 @@ def view_to_bytes(view: KtBytesView) -> bytes:
 def find_library(explicit: str | None = None) -> str:
     if explicit:
         return explicit
-    env = os.environ.get("KT_ROBOTICS_LIB")
-    if env:
-        return env
-    for root in os.environ.get("KT_ROBOTICS_PACKAGE_ROOTS", "").split(os.pathsep):
+    for variable in ("KT_NODE_LIB", "KT_ROBOTICS_LIB"):
+        env = os.environ.get(variable)
+        if env:
+            return env
+    for root in os.environ.get("KT_NODE_PACKAGE_ROOTS", os.environ.get("KT_ROBOTICS_PACKAGE_ROOTS", "")).split(os.pathsep):
         if not root:
             continue
-        candidate = Path(root) / "lib" / "lib_ktrobotics.so.1"
-        if candidate.exists():
-            return str(candidate)
-    found = ctypes.util.find_library("ktrobotics")
+        candidates = [
+            Path(root) / "lib" / "libkt_node.so",
+            Path(root) / "lib" / "libkt_node.so.1",
+        ]
+        candidates.extend(Path(root).glob("dist/libkt_node/*/*/lib/libkt_node.so"))
+        candidates.extend(Path(root).glob("dist/libkt_node/*/*/lib/libkt_node.so.1"))
+        for candidate in candidates:
+            if candidate.exists():
+                return str(candidate)
+    found = ctypes.util.find_library("kt_node") or ctypes.util.find_library("ktnode")
     if found:
         return found
-    return "lib_ktrobotics.so.1"
+    return "libkt_node.so"
 
 
 def load_library(path: str | None = None) -> ctypes.CDLL:
