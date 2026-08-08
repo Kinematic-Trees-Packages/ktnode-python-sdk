@@ -40,7 +40,7 @@
   "metadata": {
     "author": "Kinematic Trees Package Team",
     "description": "Kinematic Trees Python SDK boilerplate for projects that build against KTM-installed kt-node.",
-    "homepage": "https://github.com/Kinematic-Trees-Packages/ktnode-python-sdk",
+    "homepage": "https://github.com/Kinematic-Trees-Packages/kt-node-python-sdk",
     "keywords": [
       "kinematic-trees",
       "robotics",
@@ -57,12 +57,12 @@
         "name": "Kinematic Trees Package Team"
       }
     ],
-    "name": "ktrobotics-python-sdk",
+    "name": "kt-node-python-sdk",
     "namespace": "kinematic-trees",
     "packageType": "local",
     "repository": {
       "type": "git",
-      "url": "https://github.com/Kinematic-Trees-Packages/ktnode-python-sdk.git"
+      "url": "https://github.com/Kinematic-Trees-Packages/kt-node-python-sdk.git"
     },
     "version": "0.1.1"
   },
