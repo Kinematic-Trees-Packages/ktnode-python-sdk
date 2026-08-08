@@ -1,7 +1,7 @@
 """Low-level ctypes binding for the kt-node native library, libkt_node.
 
 This module is intentionally private-ish: node authors should use
-`ktrobotics.runtime`, not call these functions directly.
+`ktnode.runtime`, not call these functions directly.
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ import os
 from pathlib import Path
 
 KT_ABI_VERSION_MAJOR = 1
-KT_ABI_VERSION_MINOR = 1
+KT_ABI_VERSION_MINOR = 2
 
 KT_STATUS_OK = 0
 
@@ -154,11 +154,11 @@ def view_to_bytes(view: KtBytesView) -> bytes:
 def find_library(explicit: str | None = None) -> str:
     if explicit:
         return explicit
-    for variable in ("KT_NODE_LIB", "KT_ROBOTICS_LIB"):
+    for variable in ("KT_NODE_LIB",):
         env = os.environ.get(variable)
         if env:
             return env
-    for root in os.environ.get("KT_NODE_PACKAGE_ROOTS", os.environ.get("KT_ROBOTICS_PACKAGE_ROOTS", "")).split(os.pathsep):
+    for root in os.environ.get("KT_NODE_PACKAGE_ROOTS", "").split(os.pathsep):
         if not root:
             continue
         candidates = [

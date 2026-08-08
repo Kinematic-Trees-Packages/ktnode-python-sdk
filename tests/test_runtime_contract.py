@@ -1,9 +1,9 @@
 import ctypes
 import unittest
 
-from ktrobotics import Node, NextStep
-from ktrobotics import abi
-from ktrobotics.runtime import KtError, _check_status
+from ktnode import Node, NextStep
+from ktnode import abi
+from ktnode.runtime import KtError, _check_status
 
 
 class FakeLib:

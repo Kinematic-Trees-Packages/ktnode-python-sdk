@@ -1,11 +1,11 @@
-# ktrobotics Python SDK
+# ktnode Python SDK
 
 High-level Python wrapper over `libkt_node`.
 
 Planned public API:
 
 ```python
-from ktrobotics import Context, Node, NextStep, run
+from ktnode import Context, Node, NextStep, run
 
 class VideoNode(Node):
     def step(self, ctx: Context) -> NextStep:

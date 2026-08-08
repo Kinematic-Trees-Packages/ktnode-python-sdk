@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""OpenCV-backed stress test for ktrobotics.vision helpers.
+"""OpenCV-backed stress test for ktnode.vision helpers.
 
 This is intentionally not a fake data generator. It reads real frames from a
 video file with OpenCV, converts them to RGB, then asks the SDK helper to build
-valid KT Robotics ImageSample messages.
+valid KT Node ImageSample messages.
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "sdk" / "python"))
 
 import cv2
-from ktrobotics.vision import make_rgb_image
+from ktnode.vision import make_rgb_image
 
 
 def main() -> int:

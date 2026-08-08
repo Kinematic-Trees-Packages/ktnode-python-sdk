@@ -1,4 +1,4 @@
-"""High-level Python SDK for KT Robotics runtime nodes."""
+"""High-level Python SDK for KT Node runtime nodes."""
 
 from .runtime import Context, KtError, Message, Node, NextStep, Runtime, run
 from .vision import RGBImage, decode_image_sample_summary, encode_image_sample, make_rgb_image, vision_sample_schema

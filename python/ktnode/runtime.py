@@ -1,4 +1,4 @@
-"""High-level Python SDK for KT Robotics runtime nodes."""
+"""High-level Python SDK for KT Node runtime nodes."""
 
 from __future__ import annotations
 
@@ -134,7 +134,7 @@ class Runtime:
         self._lib = abi.load_library(library_path)
         if self._lib.kt_abi_version_major() != abi.KT_ABI_VERSION_MAJOR:
             raise KtError(
-                f"unsupported KT Robotics ABI major {self._lib.kt_abi_version_major()}, "
+                f"unsupported KT Node ABI major {self._lib.kt_abi_version_major()}, "
                 f"expected {abi.KT_ABI_VERSION_MAJOR}"
             )
         self._node = node

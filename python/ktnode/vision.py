@@ -1,7 +1,7 @@
 """Vision message helpers.
 
 These helpers are contract builders: they turn caller-owned image data into KT
-Robotics vision messages. They do not generate fake camera data. Tests and
+KT Node vision messages. They do not generate fake camera data. Tests and
 examples may generate their own sample arrays/bytes, then pass them here.
 """
 
@@ -101,7 +101,7 @@ def make_rgb_image(
 
 
 def schema_paths() -> list[Path]:
-    raw = os.environ.get("KT_ROBOTICS_SCHEMA_PATH", "")
+    raw = os.environ.get("KT_NODE_SCHEMA_PATH", "")
     return [Path(item) for item in raw.split(os.pathsep) if item]
 
 
@@ -110,7 +110,7 @@ def vision_sample_schema() -> Path:
         candidate = root / "vision" / "vision_sample.fbs"
         if candidate.exists():
             return candidate
-    raise FileNotFoundError("vision/vision_sample.fbs not found in KT_ROBOTICS_SCHEMA_PATH")
+    raise FileNotFoundError("vision/vision_sample.fbs not found in KT_NODE_SCHEMA_PATH")
 
 
 def encode_image_sample(image: RGBImage) -> bytes:

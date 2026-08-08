@@ -3,7 +3,7 @@ import tempfile
 from pathlib import Path
 import unittest
 
-from ktrobotics.vision import decode_image_sample_summary, encode_image_sample, make_rgb_image, vision_sample_schema
+from ktnode.vision import decode_image_sample_summary, encode_image_sample, make_rgb_image, vision_sample_schema
 
 
 class VisionContractTests(unittest.TestCase):
@@ -54,15 +54,15 @@ class VisionContractTests(unittest.TestCase):
             schema = root / "vision" / "vision_sample.fbs"
             schema.parent.mkdir()
             schema.write_text("root_type ImageSample;\n")
-            old = os.environ.get("KT_ROBOTICS_SCHEMA_PATH")
-            os.environ["KT_ROBOTICS_SCHEMA_PATH"] = str(root)
+            old = os.environ.get("KT_NODE_SCHEMA_PATH")
+            os.environ["KT_NODE_SCHEMA_PATH"] = str(root)
             try:
                 self.assertEqual(vision_sample_schema(), schema)
             finally:
                 if old is None:
-                    os.environ.pop("KT_ROBOTICS_SCHEMA_PATH", None)
+                    os.environ.pop("KT_NODE_SCHEMA_PATH", None)
                 else:
-                    os.environ["KT_ROBOTICS_SCHEMA_PATH"] = old
+                    os.environ["KT_NODE_SCHEMA_PATH"] = old
 
 
 if __name__ == "__main__":
